@@ -1,6 +1,6 @@
 {
-  "name": "mode-grammar-builder",
-  "version": "0.6.0",
+  "name": "@garyos/mode-grammar-builder",
+  "version": "0.6.1",
   "description": "Build a jison grammar for a bash-parser mode",
   "repository": "vorpaljs/mode-grammar-builder",
   "license": "MIT",
