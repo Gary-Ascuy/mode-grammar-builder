@@ -39,7 +39,7 @@ function build(modesFolder, modeName, isWeb) {
 	let parserSource;
 	try {
 		const options = isWeb ? { moduleMain: 'function commonjsMain (args) {}' } : { }
-		const parser = new Parser(mode.grammarSource);
+		const parser = new Parser(mode.grammarSource, options);
 		parserSource = parser.generate();
 	} catch (err) {
 		console.log(chalk.red(`Cannot compile grammar: \n${err.stack}`));
