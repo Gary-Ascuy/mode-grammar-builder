@@ -10,7 +10,8 @@ const Parser = require('jison').Parser;
 const argv = minimist(process.argv.slice(2));
 
 if (argv._.length === 2) {
-	build(argv._[0], argv._[1]);
+	const isWeb = process.argv.indexOf('--web') >= 0
+	build(argv._[0], argv._[1], isWeb);
 } else {
 	console.log(chalk.red(`Usage: mgb <modes folder> <mode name>`));
 	process.exit(1);
@@ -26,7 +27,7 @@ function loadPlugin(modesFolder, modeName, utils) {
 	return modePlugin.init(null, utils);
 }
 
-function build(modesFolder, modeName) {
+function build(modesFolder, modeName, isWeb) {
 	const modeModule = resolve(modesFolder, modeName, 'index.js');
 	const builtGrammarPath = resolve(modesFolder, modeName, 'built-grammar.js');
 	const utilsPath = resolve(modesFolder, '..', 'utils');
@@ -37,6 +38,7 @@ function build(modesFolder, modeName) {
 	spinner.text = 'Mode module loaded.';
 	let parserSource;
 	try {
+		const options = isWeb ? { moduleMain: 'function commonjsMain (args) {}' } : { }
 		const parser = new Parser(mode.grammarSource);
 		parserSource = parser.generate();
 	} catch (err) {
